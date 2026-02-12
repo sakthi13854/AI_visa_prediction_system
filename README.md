@@ -60,8 +60,6 @@ The repository includes a cleaned sample at [data/cleaned_sample.csv](data/clean
 **License & Contact**
 
 - License: MIT (replace with your preferred license)
-- Author: Sakthi — open issues or email for questions.
+- Author: Sakthi S — open issues or email for questions.
 
 ---
-
-If you'd like, I can add a short CLI script or training script next.
