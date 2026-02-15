@@ -59,7 +59,7 @@ The repository includes a cleaned sample at [data/cleaned_sample.csv](data/clean
 
 **License & Contact**
 
-- License: MIT (replace with your preferred license)
+- License: MIT 
 - Author: Sakthi S — open issues or email for questions.
 
 ---
