@@ -7,11 +7,12 @@ import os
 predict_bp = Blueprint('predict', __name__)
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR    = os.path.dirname(os.path.dirname(BASE_DIR))  
 
-columns  = joblib.load(os.path.join(BASE_DIR, 'models', 'columns.pkl'))
-model    = joblib.load(os.path.join(BASE_DIR, 'models', 'model.pkl'))
-_df_raw  = pd.read_csv(os.path.join(BASE_DIR, 'data', 'data_for_training.csv'))
+model       = joblib.load(os.path.join(ROOT_DIR, 'models', 'model.pkl'))
+columns     = joblib.load(os.path.join(ROOT_DIR, 'models', 'columns.pkl'))
+_df_raw     = pd.read_csv(os.path.join(ROOT_DIR, 'data', 'data_for_training.csv'))
 
 columns = list(dict.fromkeys(columns))
 
