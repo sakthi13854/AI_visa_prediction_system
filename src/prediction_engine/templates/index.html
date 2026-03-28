@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visa Processing Time Predictor</title>
+
+   
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    
+    <div class="header">
+        <h1>🇺🇸 Visa Processing Time Estimator 🇺🇸</h1>
+        <p>Get accurate predictions using AI-powered analytics</p>
+    </div>
+
+    
+    <form action="/predict/" method="POST" onsubmit="showLoader()">
+
+        
+        <div class="card">
+            <h3> Basic Information About Application</h3>
+
+            <label> Applied Year</label>
+            <input type="number" name="year" placeholder="e.g. 2024" required>
+
+            <label>Applied Month: <span id="monthLabel">1 (Jan)</span></label>
+            <input type="range" name="month" min="1" max="12" value="1"
+                   oninput="updateMonth(this.value)">
+        </div>
+
+       
+        <div class="card">
+            <h3>Processing Details</h3>
+
+            <label>Processing Center</label>
+            <select name="processing_center" required>
+                <option value="">Select Center</option>
+                <option>California Service Center</option>
+                <option>Texas Service Center</option>
+                <option>New York Service Center</option>
+            </select>
+
+            <label>Service Center Location</label>
+            <select name="service_center" required>
+                <option value="">Select Location</option>
+                <option>Mumbai</option>
+                <option>London</option>
+                <option>Toronto</option>
+                <option>Washington DC</option>
+                <option>Canberra</option>
+                <option>Abu Dhabi</option>
+                <option>Brussels</option>
+                <option>Mexico City</option>
+                <option>Kabul</option>
+            </select>
+        </div>
+
+        
+        <div class="card">
+            <h3>💰 Wage Details (USD)</h3>
+
+            <div class="grid">
+                <div>
+                    <label>Wage From</label>
+                    <input type="number" step="0.01" name="wage_from" required>
+                </div>
+
+                <div>
+                    <label>Wage To</label>
+                    <input type="number" step="0.01" name="wage_to" required>
+                </div>
+            </div>
+
+            <label>Prevailing Wage</label>
+            <input type="number" step="0.01" name="prevailing_wage" required>
+
+            <label>Wage Level</label>
+            <select name="wage_level" required>
+                <option value="">Select Level</option>
+                <option value="1">Level 1 (Entry)</option>
+                <option value="2">Level 2 (Intermediate)</option>
+                <option value="3">Level 3 (Experienced)</option>
+                <option value="4">Level 4 (Expert)</option>
+            </select>
+        </div>
+
+        
+        <div class="card">
+            <h3>📄 Application Type</h3>
+
+            <div class="grid">
+                <div>
+                    <label>New Employment</label>
+                    <select name="new_emp">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Change Employer</label>
+                    <select name="change_emp">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Amended Petition</label>
+                    <select name="amended">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+       
+        <button type="submit"> Predict Processing Time</button>
+
+        
+        <div id="loader" style="display:none;">
+             Predicting... Please wait
+        </div>
+
+    </form>
+  {% if prediction %}
+<div class="grid">
+    <div class="card">
+        <h4>⏳ Avg Time</h4>
+        <p>{{ prediction }} days</p>
+    </div>
+
+    <div class="card">
+        <h4>📉 Min Time</h4>
+        <p>{{ low }} days</p>
+    </div>
+
+    <div class="card">
+        <h4>📈 Max Time</h4>
+        <p>{{ high }} days</p>
+    </div>
+</div>
+
+<div class="result">
+    <h2>⏳ {{ prediction }} Days</h2>
+    <p><b>Range:</b> {{ low }} – {{ high }} days</p>
+</div>
+{% endif %}
+
+</div>
+
+
+
+<script>
+function updateMonth(value) {
+    const months = ["Jan","Feb","Mar","Apr","May","Jun",
+                    "Jul","Aug","Sep","Oct","Nov","Dec"];
+    document.getElementById("monthLabel").innerText =
+        value + " (" + months[value-1] + ")";
+}
+
+function showLoader() {
+    document.getElementById("loader").style.display = "block";
+}
+</script>
+
+
+</body>
+</html>
