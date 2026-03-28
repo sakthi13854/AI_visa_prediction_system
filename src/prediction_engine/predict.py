@@ -112,7 +112,7 @@ def _build_chart_data(df):
         json.dumps(monthly_vol),
     )
 
-
+(
     _country_labels,
     _country_days,
     _visa_labels,
