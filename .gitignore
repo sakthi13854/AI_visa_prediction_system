@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pydmodels/columns.pkl
+models/model.pkl
+data/data_for_training.csv
+__pycache__/
+*.py[cod]

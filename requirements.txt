@@ -1,2 +1,8 @@
-numpy
+randomforest
+flask
 pandas
+numpy
+scikit-learn
+joblib
+xgboost
+gunicorn
