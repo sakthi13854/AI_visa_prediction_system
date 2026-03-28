@@ -8,8 +8,10 @@ predict_bp = Blueprint('predict', __name__)
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 columns  = joblib.load(os.path.join(BASE_DIR, 'models', 'columns.pkl'))
 model    = joblib.load(os.path.join(BASE_DIR, 'models', 'model.pkl'))
+_df_raw  = pd.read_csv(os.path.join(BASE_DIR, 'data', 'data_for_training.csv'))
 
 columns = list(dict.fromkeys(columns))
 
@@ -28,10 +30,8 @@ for col in required_service_cols:
         columns.append(col)
 
 
-_df_raw = pd.read_csv("/home/sakthi/data_for_training.csv")
 
 def _build_chart_data(df):
-    """Pre-compute all three chart datasets from the training CSV."""
 
     
     country_labels, country_days = [], []
