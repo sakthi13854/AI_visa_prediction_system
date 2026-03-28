@@ -1,9 +1,11 @@
 import joblib
 import pandas as pd
+import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-columns = joblib.load('/home/sakthi/projects/AI_visa_prediction_system/models/columns.pkl')
-model = joblib.load('/home/sakthi/projects/AI_visa_prediction_system/models/model.pkl')
+columns  = joblib.load(os.path.join(BASE_DIR, 'models', 'columns.pkl'))
+model    = joblib.load(os.path.join(BASE_DIR, 'models', 'model.pkl'))
 
 columns = list(dict.fromkeys(columns))
 
