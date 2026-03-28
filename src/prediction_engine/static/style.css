@@ -5,7 +5,6 @@ body {
     padding: 0;
 }
 
-/* Overlay for readability */
 body::before {
     content: "";
     position: fixed;
@@ -15,7 +14,6 @@ body::before {
     z-index: -1;
 }
 
-/* Container */
 .container {
     width: 50%;
     margin: 60px auto;
@@ -27,19 +25,16 @@ body::before {
     box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }
 
-/* Title */
 h1 {
     text-align: center;
     margin-bottom: 30px;
     font-weight: 600;
 }
 
-/* Sections */
 .section {
     margin-bottom: 25px;
 }
 
-/* Inputs */
 input, select {
     width: 100%;
     padding: 12px;
@@ -48,9 +43,9 @@ input, select {
     border: none;
     outline: none;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
-/* Button */
 button {
     width: 100%;
     padding: 14px;
@@ -68,7 +63,6 @@ button:hover {
     box-shadow: 0 8px 20px rgba(255, 79, 129, 0.5);
 }
 
-/* Result Box */
 .result {
     margin-top: 25px;
     padding: 25px;
@@ -78,17 +72,17 @@ button:hover {
     font-size: 20px;
 }
 
-/* Small labels */
 label {
     font-size: 14px;
     opacity: 0.8;
 }
-/* Header */
+
 .header {
     text-align: center;
     margin-bottom: 20px;
 }
-/* Card Sections */
+
+
 .card {
     background: rgba(255,255,255,0.08);
     padding: 20px;
@@ -103,14 +97,38 @@ label {
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
 
-/* Grid Layout */
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
 }
 
-/* Loader */
+
+.stat-card h4 {
+    font-size: 14px;
+    opacity: 0.7;
+    margin: 0 0 6px;
+}
+
+.stat-card p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+.result h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.result p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+
 #loader {
     margin-top: 10px;
     text-align: center;
@@ -118,42 +136,83 @@ label {
     color: #ddd;
 }
 
-/* Result Cards (Min / Max / Avg) */
-.grid .card h4 {
-    font-size: 14px;
-    opacity: 0.7;
+
+.insights-header {
+    margin: 36px 0 8px;
+    text-align: center;
 }
 
-.grid .card p {
-    font-size: 20px;
-    font-weight: bold;
+.insights-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
 }
 
-/* Highlight main result */
-.result h2 {
-    font-size: 36px;
+.insights-header p {
+    font-size: 13px;
+    opacity: 0.65;
+    margin: 0 0 16px;
+}
+
+
+.chart-card {
+    padding: 22px 24px 20px;
+}
+
+.chart-card:hover {
+    transform: translateY(-2px);
+}
+
+.chart-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.chart-sub {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 12px;
+}
+
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12px;
+    opacity: 0.75;
     margin-bottom: 10px;
 }
 
-/* Range text */
-.result p {
-    font-size: 16px;
-    opacity: 0.9;
+.chart-legend span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-/* Chart Styling */
-canvas {
-    margin-top: 15px;
+.leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: inline-block;
 }
 
-/* Responsive */
+
+.chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 300px;       
+}
+
 @media (max-width: 900px) {
     .container {
         width: 90%;
+        padding: 24px;
     }
 
     .grid {
         grid-template-columns: 1fr;
     }
 }
-
