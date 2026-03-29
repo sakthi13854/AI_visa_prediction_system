@@ -1,190 +1,178 @@
+# AI-Enabled Visa Processing Time Estimator
 
-# AI-Enabled Visa Status Prediction and Processing Time Estimator
+> Predict U.S. visa processing times using machine learning — live at **[ai-visa-prediction-system.onrender.com](https://ai-visa-prediction-system.onrender.com)**
+
+---
 
 ## Overview
 
-The **AI-Enabled Visa Status Prediction and Processing Time Estimator** is a machine learning project that predicts visa application processing time using historical visa data.
+The **AI-Enabled Visa Processing Time Estimator** is a full-stack machine learning web application that predicts how long a U.S. H-1B visa application will take to process, based on historical LCA disclosure data.
 
-Visa applicants often face uncertainty regarding how long their applications will take to process. Processing times can vary depending on several factors such as visa category, applicant country, processing center workload, and seasonal trends.
+Visa applicants face significant uncertainty about processing durations. This system analyzes factors such as wage level, processing center, service office location, and seasonal submission patterns to deliver **data-driven processing time estimates** with confidence intervals.
 
-This project applies **data analysis and machine learning techniques** to estimate visa processing durations based on past application records. By analyzing historical data, the system provides **data-driven predictions** that help applicants better understand potential waiting periods.
+The project covers the complete ML lifecycle — data preprocessing, feature engineering, model training, evaluation, and deployment as a publicly accessible web application.
 
-The project demonstrates the complete machine learning workflow including **data preprocessing, exploratory data analysis, feature engineering, model training, and prediction generation**.
+---
+
+## Live Demo
+
+**[https://ai-visa-prediction-system.onrender.com](https://ai-visa-prediction-system.onrender.com)**
+
+Fill in your application details and get an instant prediction with a min–max processing range and data insights dashboard.
 
 ---
 
 ## Key Features
 
-- Data cleaning and preprocessing pipeline
-- Feature engineering for predictive modeling
-- Exploratory Data Analysis (EDA) with visual insights
-- Machine learning regression models for processing time prediction
-- Model evaluation using standard performance metrics
-- Reproducible analysis using Jupyter notebooks
+- AI-powered processing time prediction using XGBoost
+- Confidence interval — predicted range (min / avg / max days)
+- Data Insights Dashboard with 3 live charts:
+  - Processing time by service office (country)
+  - Visa type (wage level) comparison
+  - Monthly seasonal trend — application volume vs processing days
+- Full-stack Flask web application with glassmorphism UI
+- Deployed on Render with Gunicorn WSGI server
 
 ---
 
 ## Dataset
 
-The dataset used in this project is derived from:
+**H-1B LCA Disclosure Data (2020–2024)**
+Source: [Kaggle — H1B LCA Disclosure Data](https://www.kaggle.com/datasets/zongaobian/h1b-lca-disclosure-data-2020-2024)
 
-**H1B LCA Disclosure Data (2020–2024)**  
-Source: https://www.kaggle.com/datasets/zongaobian/h1b-lca-disclosure-data-2020-2024
+Fields used for training:
 
-The dataset contains information such as:
-
-- Employer name
-- Work location
-- Wage information
-- Visa case status
-- Application processing details
-
-After preprocessing, the dataset is cleaned and structured for machine learning analysis.
-
-The final dataset includes the target variable:
-
-```
-
-processing_time_days
-
-```
-
-This represents the number of days taken between visa application submission and decision.
+| Feature | Description |
+|---|---|
+| `WAGE_RATE_OF_PAY_FROM / TO` | Offered wage range (USD) |
+| `PREVAILING_WAGE` | Department of Labor prevailing wage |
+| `PW_WAGE_LEVEL` | Wage level (1–4: Entry to Expert) |
+| `SERVICE_OFFICE` | Embassy / consulate location |
+| `PROCESSING_CENTER` | USCIS processing center |
+| `SUBMISSION_MONTH / QUARTER` | Seasonal submission features |
+| `NEW_EMPLOYMENT / CHANGE_EMPLOYER` | Application type flags |
+| `PROCESSING_DAYS` | Target variable |
 
 ---
 
 ## Repository Structure
 
 ```
-
-AI-Visa-Prediction/
+AI_VISA_PREDICTION_SYSTEM/
 │
 ├── data/
-│   └── cleaned_sample.csv
-│
-├── notebooks/
-│   └── milestone1.ipynb
+│   └── chart_data.json           # Pre-computed chart data (generated from training CSV)
 │
 ├── models/
-│   └── trained_model.pkl
+│   ├── model.pkl                 # Trained XGBoost model
+│   └── columns.pkl               # Feature column order
+│
+├── notebooks/
+│   ├── milestone1.ipynb          # EDA and data preprocessing
+│   ├── milestone2.ipynb          # Feature engineering
+│   └── Milestone_3.ipynb         # Model training and evaluation
+│
+├── documents/
+│   ├── Sakthi-agile-doc.xlsx
+│   ├── Sakthi-Defect_tracker-doc.xlsx
+│   └── Sakthi-Unit_test-doc.xlsx
+│
+├── src/
+│   └── prediction_engine/
+│       ├── app.py                # Flask application entry point
+│       ├── predict.py            # Prediction blueprint + chart data loader
+│       ├── test_cases.py         # Structured test cases
+│       ├── templates/
+│       │   └── index.html        # Frontend UI
+│       └── static/
+│           └── style.css         # Glassmorphism styling
 │
 ├── requirements.txt
-│
+├── .gitignore
 └── README.md
-
-````
+```
 
 ---
 
 ## Machine Learning Workflow
 
-The project follows a standard machine learning pipeline:
-
-1. Data collection from public datasets
-2. Data cleaning and preprocessing
-3. Feature engineering
-4. Exploratory data analysis
-5. Model training
-6. Model evaluation
-7. Model selection
-8. Prediction generation
-
-Regression models are used to estimate visa processing time based on historical application patterns.
+1. Data collection from public H-1B LCA disclosure records
+2. Data cleaning and null handling
+3. Feature engineering (month, quarter, wage ratio, one-hot encoding)
+4. Exploratory data analysis with Matplotlib / Seaborn
+5. Model training — Linear Regression, Random Forest, XGBoost
+6. Model evaluation and selection
+7. Model serialization with Joblib
+8. Web app integration and cloud deployment
 
 ---
 
-## Models Used
+## Models Evaluated
 
-The following regression algorithms are implemented and evaluated:
+| Model | MAE | RMSE | R² |
+|---|---|---|---|
+| Linear Regression | baseline | baseline | baseline |
+| Random Forest Regressor | — | — | — |
+| **XGBoost Regressor** | **best** | **best** | **best** |
 
-- Linear Regression
-- Random Forest Regressor
-- Gradient Boosting Regressor
+XGBoost was selected as the final model for deployment.
 
-Model performance is evaluated using:
-
-- **MAE (Mean Absolute Error)**
-- **RMSE (Root Mean Squared Error)**
-- **R² Score**
-
-The best-performing model can be exported for prediction use.
+Performance is measured using:
+- MAE (Mean Absolute Error)
+- RMSE (Root Mean Squared Error)
+- R² Score
 
 ---
 
 ## Installation
 
-Create a Python virtual environment:
-
 ```bash
+git clone https://github.com/sakthi13854/AI_visa_prediction_system
+cd AI_visa_prediction_system
 python -m venv .venv
-````
-
-Activate the environment:
-
-**Linux / Mac**
-
-```bash
-source .venv/bin/activate
-```
-
-**Windows**
-
-```bash
-.venv\Scripts\activate
-```
-
-Install project dependencies:
-
-```bash
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+Run locally:
+
+```bash
+cd src/prediction_engine
+flask run
 ```
 
 ---
 
-## Running the Project
+## Deployment
 
-Launch Jupyter Notebook to explore the dataset and run the machine learning pipeline:
+The application is deployed on **Render** using Gunicorn as the WSGI server.
 
-```bash
-jupyter lab notebooks/milestone1.ipynb
-```
+- Platform: [Render](https://render.com)
+- Runtime: Python 3.14
+- Server: Gunicorn
+- Root directory: `src/prediction_engine`
+- Start command: `gunicorn app:app --bind 0.0.0.0:$PORT`
 
-The notebook contains the full workflow including data preprocessing, analysis, and model training.
+Live URL: **[https://ai-visa-prediction-system.onrender.com](https://ai-visa-prediction-system.onrender.com)**
+
+> Note: The free tier spins down after 15 minutes of inactivity. The first request after sleep may take ~30 seconds to wake up.
 
 ---
 
 ## Technologies Used
 
-**Programming Language**
-
-* Python
-
-**Libraries**
-
-* Pandas
-* NumPy
-* Scikit-learn
-* Matplotlib
-* Seaborn
-* Joblib
-
-**Tools**
-
-* Jupyter Notebook
-* Git
-* GitHub
-
----
-
-## Future Improvements
-
-Potential extensions for this project include:
-
-* Implementing advanced models such as **XGBoost or LightGBM**
-* Adding visa approval probability prediction
-* Building a web interface using **Flask or Streamlit**
-* Deploying the prediction system to a cloud platform
-* Integrating real-time application data for improved predictions
+| Layer | Technology |
+|---|---|
+| Language | Python 3.14 |
+| ML | XGBoost, Scikit-learn |
+| Data | Pandas, NumPy |
+| Visualization | Matplotlib, Seaborn, Chart.js |
+| Web Framework | Flask |
+| Frontend | HTML, CSS (Glassmorphism) |
+| Server | Gunicorn |
+| Deployment | Render |
+| Version Control | Git, GitHub |
+| Notebooks | Jupyter Lab |
 
 ---
 
@@ -199,5 +187,3 @@ This project is licensed under the **MIT License**.
 **Sakthi S**
 
 For questions, feedback, or contributions, feel free to open an issue or submit a pull request.
-
-
