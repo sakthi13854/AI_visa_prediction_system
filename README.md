@@ -182,8 +182,5 @@ This project is licensed under the **MIT License**.
 
 ---
 
-## Author
-
-**Sakthi S**
 
 For questions, feedback, or contributions, feel free to open an issue or submit a pull request.
