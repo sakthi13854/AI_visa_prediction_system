@@ -12,7 +12,17 @@ ROOT_DIR    = os.path.dirname(os.path.dirname(BASE_DIR))
 
 model       = joblib.load(os.path.join(ROOT_DIR, 'models', 'model.pkl'))
 columns     = joblib.load(os.path.join(ROOT_DIR, 'models', 'columns.pkl'))
-_df_raw     = pd.read_csv(os.path.join(ROOT_DIR, 'data', 'data_for_training.csv'))
+
+with open(os.path.join(ROOT_DIR, 'data', 'chart_data.json')) as f:
+    _chart = json.load(f)
+
+_country_labels = json.dumps(list(_chart['country'].keys()))
+_country_days   = json.dumps(list(_chart['country'].values()))
+_visa_labels    = json.dumps(list(_chart['visa'].keys()))
+_visa_days      = json.dumps(list(_chart['visa'].values()))
+_visa_approval  = json.dumps([None] * len(_chart['visa']))
+_avg_days       = json.dumps(_chart['avg_days'])
+_monthly_vol    = json.dumps(_chart['monthly_vol'])
 
 columns = list(dict.fromkeys(columns))
 
@@ -111,16 +121,6 @@ def _build_chart_data(df):
         json.dumps(avg_days),
         json.dumps(monthly_vol),
     )
-
-(
-    _country_labels,
-    _country_days,
-    _visa_labels,
-    _visa_days,
-    _visa_approval,
-    _avg_days,
-    _monthly_vol,
-) = _build_chart_data(_df_raw)
 
 
 
